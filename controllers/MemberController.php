@@ -20,18 +20,15 @@ class MemberController extends Controller
         returnJSON($members);
     }
 
+    public function actionGetCountries()
+    {
+        $countries = include_once ROOT . '/utility/countryList.php';
+        returnJSON($countries);
+    }
+
     public function actionRegister()
     {
-        $params = include(ROOT . '/config/params.php');
-        $member = new Member();
-        $countries = include_once ROOT . '/utility/countryList.php';
-
-        $this->render("register", [
-            'twitterText' => $params['twitter_text'],
-            'twitterUrl' => $params['twitter_url'],
-            'membersCount' => $member->count(),
-            'countries' => $countries
-        ]);
+        $this->render('register');
     }
 
     public function actionCurrent()
@@ -59,8 +56,7 @@ class MemberController extends Controller
 
     public function actionCreate()
     {
-        $data = [];
-        parse_str($_POST['form_data'], $data);
+        $data = $_REQUEST;
         $required = ['first_name', 'last_name', 'birth_date', 'report_subject', 'country', 'phone_number', 'email'];
         $maxLength = [
             'first_name' => 45,
@@ -89,7 +85,6 @@ class MemberController extends Controller
             }
             http_response_code(200);
         } else {
-            http_response_code(422);
             returnJSON($errors);
         }
 

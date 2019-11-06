@@ -18,6 +18,37 @@
     }
   })
 
+  let registerForm = new Vue({
+    el: '#register-form',
+    data: {
+      countries: []
+    },
+    mounted: function () {
+      this.getCountries()
+    },
+    methods: {
+      getCountries: function () {
+        axios.get('/get-countries')
+          .then(function (resp) {
+            registerForm.countries = resp.data;
+          })
+          .catch(function (resp) {
+            console.error(resp)
+          })
+      },
+      createMember: function () {
+        let formData = $('#register-form').serialize()
+        axios.post('/members/create', formData)
+          .then(function (response) {
+            console.log(response.data)
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+      }
+    }
+  })
+
   $.ajax({
     url: '/isLogged',
     type: 'GET',
@@ -39,12 +70,7 @@
 
   $('#phone_number').inputmask('+9 (999) 999-9999')
 
-  let register_form = $('#register_form')
-  let more_info_form = $('#more_info_form')
-  let social = $('#social')
-  let errors = $('#errors')
-
-  $(document).on('click', '#to_more_info_form', function () {
+  /*$(document).on('click', '#to_more_info_form', function () {
     let form_data = register_form.serialize()
 
     $.ajax({
@@ -72,9 +98,9 @@
         }
       }
     })
-  })
+  })*/
 
-  function showErrorMessage (selector, text) {
+  /*function showErrorMessage (selector, text) {
     $(selector).prepend('<strong class="text-danger">' + text + '</strong><br>')
   }
 
@@ -112,7 +138,7 @@
       errors.removeClass("hidden")
       errors.empty()
       showErrorMessage('#errors', 'Image file size cannot be more than 2 MB')
-      $('#photo').replaceWith('<input type="file" accept="image/*" class="form-control-file" name="photo" id="photo">')
+      $('#photo').replaceWith('<input type="file" accept="image/!*" class="form-control-file" name="photo" id="photo">')
     }
   })
 
@@ -145,6 +171,6 @@
       contentType: false,
       processData: false
     })
-  })
+  })*/
 
 })(jQuery)
