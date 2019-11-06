@@ -11,10 +11,13 @@ class MemberController extends Controller
 {
     public function actionIndex()
     {
-        $member = new Member();
-        $members = $member->all();
+        $this->render('members');
+    }
 
-        $this->render("members", ['members' => $members]);
+    public function actionGetMembers()
+    {
+        $members = (new Member())->all();
+        returnJSON($members);
     }
 
     public function actionRegister()

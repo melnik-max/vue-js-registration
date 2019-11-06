@@ -2,6 +2,22 @@
 
 (function ($) {
 
+  let membersTable = new Vue({
+    el: '#members-table',
+    data: {
+      members: []
+    },
+    mounted: function () {
+      axios.get('/get-members')
+        .then(function (resp) {
+          membersTable.members = resp.data;
+        })
+        .catch(function (resp) {
+          console.error(resp)
+        })
+    }
+  })
+
   $.ajax({
     url: '/isLogged',
     type: 'GET',

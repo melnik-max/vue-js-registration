@@ -9,10 +9,13 @@ abstract class Controller
     public $vars = [];
     public $layout = 'main';
 
-    public function render($filename, array $data)
+    public function render($filename, array $data = null)
     {
         ob_start();
-        extract($data);
+
+        if ($data) {
+            extract($data);
+        }
 
         require (ROOT . '/views/' . $filename . '.php');
         $content = ob_get_clean();
