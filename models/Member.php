@@ -9,18 +9,6 @@ class Member extends Model
 {
     protected static $table = 'members';
 
-    public function update(array $data)
-    {
-        $query = $this->db->prepare("UPDATE {$this->table} SET company = ?, `position` = ?, about_me = ?, photo_name = ? WHERE id = ?");
-        $query->execute([
-            $data['company'],
-            $data['position'],
-            $data['about_me'],
-            $data['photo_name'],
-            $_SESSION['member_id']
-        ]);
-
-    }
 
     public static function isEmailInUse($email)
     {

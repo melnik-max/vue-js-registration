@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'isLogged' => 'member/isLogged',
+    'is-logged' => 'member/isLogged',
     'members' => 'member/index',
     'get-members' => 'member/getMembers',
     'get-countries' => 'member/getCountries',
@@ -9,6 +9,6 @@ return [
     'members/update' => 'member/update',
     '' => 'member/register',
     'register' => 'member/register',
-    'currentMember' => 'member/current',
-    'memberCount' => 'member/count'
+    'current-member' => 'member/current',
+    'members-count' => 'member/count'
 ];

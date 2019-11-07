@@ -7,6 +7,7 @@ use core\Controller;
 use models\Member;
 use components\Validator;
 
+
 class MemberController extends Controller
 {
     public function actionIndex()
@@ -32,31 +33,27 @@ class MemberController extends Controller
 
     public function actionCurrent()
     {
-        $member = new Member();
-        $currentMember = $member->findOneById($_SESSION['member_id']);
-
-        returnJSON($currentMember);
+        returnJSON(Member::findOneById($_SESSION['member_id']));
     }
 
     public function actionCount()
     {
-        $member = new Member();
-        returnJSON($member->count());
+        returnJSON(Member::count());
     }
 
     public function actionIsLogged()
     {
         if (empty($_SESSION['member_id'])) {
-            returnJSON("false");
+            returnJSON(false);
         } else {
-            returnJSON("true");
+            returnJSON(true);
         }
     }
 
     public function actionCreate()
     {
         $data = $_REQUEST;
-        $required = ['first_name', 'last_name', 'birth_date', 'report_subject', 'country', 'phone_number', 'email'];
+        $required = ['first_name', 'last_name', 'birth_date', 'report_subject', 'country', 'phone', 'email'];
         $maxLength = [
             'first_name' => 45,
             'last_name' => 45,
@@ -67,7 +64,7 @@ class MemberController extends Controller
         $filter = [
             'birth_date' => 'date',
             'email' => 'email',
-            'phone_number' => 'phone'
+            'phone' => 'phone'
         ];
 
         $validator = new Validator($data, $required, $maxLength, $filter);
@@ -75,9 +72,7 @@ class MemberController extends Controller
 
         if (empty($errors)) {
             if (empty($_SESSION['member_id'])) {
-                $member = new Member();
-                $newMemberId = $member->create($data);
-                $_SESSION['member_id'] = $newMemberId;
+                $_SESSION['member_id'] = Member::create($data);
             } else {
                 $member = new Member();
                 $member->edit($data);
@@ -102,31 +97,27 @@ class MemberController extends Controller
         $validator = new Validator($_POST,null, $maxLength, $filter);
         $errors = $validator->validate();
 
-        if (empty($errors)) {
-            $img = $_FILES["photo"]["name"];
-            $ext = strtolower(pathinfo($img, PATHINFO_EXTENSION));
-            if (!empty($img)) {
-                $randomName = uniqid() . ".$ext";
-                move_uploaded_file($_FILES['photo']['tmp_name'], 'public/img/' . $randomName);
-            } else {
-                $randomName = 'no-photo.jpeg';
-            }
-
-            $member = new Member();
-            $member->update([
-                'company' => $_POST['company'],
-                'position' => $_POST['position'],
-                'about_me' => $_POST['about_me'],
-                'photo_name' => $randomName
-            ]);
-
-            unset ($_SESSION["member_id"]);
-            http_response_code(200);
-        } else {
-            http_response_code(422);
+        if (!empty($errors)) {
             returnJSON($errors);
         }
 
+        $img = $_FILES['photo']['name'];
+        $ext = strtolower(pathinfo($img, PATHINFO_EXTENSION));
+        if (!empty($img)) {
+            $randomName = uniqid() . ".$ext";
+            move_uploaded_file($_FILES['photo']['tmp_name'], 'public/img/' . $randomName);
+        } else {
+            $randomName = 'no-photo.jpeg';
+        }
+
+        Member::update($_SESSION['member_id'], [
+            'company' => $_POST['company'],
+            'position' => $_POST['position'],
+            'about_me' => $_POST['about_me'],
+            'photo' => $randomName
+        ]);
+
+        unset ($_SESSION['member_id']);
         return true;
     }
 }

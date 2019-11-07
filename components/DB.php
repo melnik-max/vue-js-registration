@@ -8,15 +8,20 @@ use PDO;
 
 abstract class DB
 {
-    protected static $db;
+    private static $db;
 
-    public static function getConnection()
+    public static function getConnection() {
+        if (!(self::$db instanceof PDO)) {
+            self::$db = self::setConnection();
+        }
+        return self::$db;
+    }
+
+    private static function setConnection()
     {
         $params = include(ROOT . '/config/params.php');
 
         $connectionString = "mysql:host={$params['host']};dbname={$params['dbname']}";
-        $db = new PDO($connectionString, $params['user'], $params['password']);
-
-        return $db;
+        return new PDO($connectionString, $params['user'], $params['password']);
     }
 }

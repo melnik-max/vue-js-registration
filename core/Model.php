@@ -6,6 +6,7 @@ namespace core;
 use components\DB;
 use PDO;
 
+
 abstract class Model extends DB
 {
     public static function create(array $data)
@@ -17,6 +18,15 @@ abstract class Model extends DB
         $query->execute(array_values($data));
 
         return self::getConnection()->lastInsertId();
+    }
+
+    public static function update($id, array $data)
+    {
+        $columns = implode('= ?, ', array_keys($data)) . '= ?';
+        $query = self::getConnection()->prepare("UPDATE " . self::getTableName() . " SET $columns WHERE id = ?");
+        $realValues = array_values($data);
+        $realValues[] = $id;
+        $query->execute($realValues);
     }
 
     public static function all()
@@ -38,14 +48,13 @@ abstract class Model extends DB
     {
         $query = self::getConnection()->prepare("SELECT COUNT(*) FROM " . self::getTableName());
         $query->execute();
-        $count = $query->fetchColumn();
-        
-        return $count;
+
+        return $query->fetchColumn();
     }
 
     public static function findOneById($id)
     {
-        $query = self::getConnection()->prepare("SELECT * FROM {self::getTableName()} WHERE id = :id LIMIT 1");
+        $query = self::getConnection()->prepare("SELECT * FROM " . self::getTableName() ." WHERE id = :id LIMIT 1");
         $query->execute(['id' => $id]);
 
         return $query->fetchObject();

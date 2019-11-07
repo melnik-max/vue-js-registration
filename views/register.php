@@ -3,11 +3,11 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-sm-10">
-            <h4 id="form_header" class="mt-3 text-center">To participate in the conference, please fill out the form</h4>
+            <h4 id="form-header" class="mt-3 text-center">To participate in the conference, please fill out the form</h4>
 
             <div id="errors" class="errors text-center border hidden"></div>
 
-            <form id="register-form">
+            <form id="register-form" method="POST">
 
                 <div class="form-group">
                     <label for="first_name">First name (*): </label>
@@ -42,8 +42,8 @@
                     <input type="text"
                            maxlength="18"
                            class="form-control form-control-lg"
-                           id="phone_number"
-                           name="phone_number"
+                           id="phone"
+                           name="phone"
                            placeholder="+X (XXX) XXX XXXX"
                            required>
                 </div>
@@ -52,7 +52,8 @@
                     <label for="email">Email (*): </label>
                     <input type="email" maxlength="45" class="form-control form-control-lg" id="email" name="email" placeholder="Enter email" required>
                 </div>
-                <button @click="createMember" type="button" id="to_more_info_form" class="btn btn-primary float-right mt-2 mb-2">Next</button>
+
+                <button type="submit" id="to_more_info_form" class="btn btn-primary float-right mt-2 mb-2">Next</button>
             </form>
 
             <form id="more-info-form" method="POST" class="hidden" enctype="multipart/form-data">
@@ -76,9 +77,17 @@
                     <label for="photo">Upload avatar: </label>
                     <input type="file" accept="image/*" class="form-control-file" name="photo" id="photo">
                 </div>
+
                 <button type="button" id="back-to-register-form" class="btn btn-primary float-left mb-2">Back</button>
                 <button type="submit" id="add-info" class="btn btn-primary float-right mb-2">Next</button>
             </form>
+
+            <div id="social" class="hidden text-center mt-3">
+                <h4 class="mt-2 mb-2">Registration succeed!</h4>
+                <a href="https://www.facebook.com/sharer.php?u=https://www.wikipedia.org/" class="fa fa-facebook"></a>
+                <a href="https://twitter.com/intent/tweet?url=/&text=" class="fa fa-twitter"></a>
+                <p class="mt-2"><a href="/members" class="text-success h3">All members (<span id="members-count"></span>)</a></p>
+            </div>
 
         </div>
     </div>
