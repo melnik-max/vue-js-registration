@@ -5,7 +5,7 @@
         <div class="col-sm-10">
             <h4 id="form_header" class="mt-3 text-center">To participate in the conference, please fill out the form</h4>
 
-            <section id="errors" class="errors text-center border hidden"></section>
+            <div id="errors" class="errors text-center border hidden"></div>
 
             <form id="register-form">
 
@@ -53,6 +53,31 @@
                     <input type="email" maxlength="45" class="form-control form-control-lg" id="email" name="email" placeholder="Enter email" required>
                 </div>
                 <button @click="createMember" type="button" id="to_more_info_form" class="btn btn-primary float-right mt-2 mb-2">Next</button>
+            </form>
+
+            <form id="more-info-form" method="POST" class="hidden" enctype="multipart/form-data">
+
+                <div class="form-group">
+                    <label for="company">Company: </label>
+                    <input type="text" maxlength="45" class="form-control form-control-lg" id="company" name="company" placeholder="Enter company title">
+                </div>
+
+                <div class="form-group">
+                    <label for="position">Position: </label>
+                    <input type="text" maxlength="45" class="form-control form-control-lg" id="position" name="position" placeholder="Enter position">
+                </div>
+
+                <div class="form-group">
+                    <label for="about">About me: </label>
+                    <textarea maxlength="300" class="form-control form-control-lg" id="about" name="about_me" placeholder="Enter some details"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="photo">Upload avatar: </label>
+                    <input type="file" accept="image/*" class="form-control-file" name="photo" id="photo">
+                </div>
+                <button type="button" id="back-to-register-form" class="btn btn-primary float-left mb-2">Back</button>
+                <button type="submit" id="add-info" class="btn btn-primary float-right mb-2">Next</button>
             </form>
 
         </div>

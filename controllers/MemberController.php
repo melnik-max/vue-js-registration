@@ -16,8 +16,7 @@ class MemberController extends Controller
 
     public function actionGetMembers()
     {
-        $members = (new Member())->all();
-        returnJSON($members);
+        returnJSON(Member::all());
     }
 
     public function actionGetCountries()

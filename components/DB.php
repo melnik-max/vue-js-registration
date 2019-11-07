@@ -1,18 +1,14 @@
 <?php
 
+
 namespace components;
 
 use PDO;
 
+
 abstract class DB
 {
-    protected $db;
-    protected $table;
-
-    public function __construct()
-    {
-        $this->db = self::getConnection();
-    }
+    protected static $db;
 
     public static function getConnection()
     {
@@ -23,9 +19,4 @@ abstract class DB
 
         return $db;
     }
-
-    abstract public function all();
-    abstract public function count();
-    abstract public function findOneById($id);
-
 }

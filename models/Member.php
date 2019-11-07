@@ -7,33 +7,7 @@ use core\Model;
 
 class Member extends Model
 {
-    public $table = 'members';
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    public function create(array $data)
-    {
-        $query = $this->db->prepare(
-            "INSERT INTO {$this->table} (first_name, last_name, birth_date, report_subject, country, phone_number, email) 
-                      VALUES (?, ?, ?, ?, ?, ?, ?)"
-        );
-
-        $query->execute([
-            $data['first_name'],
-            $data['last_name'],
-            $data['birth_date'],
-            $data['report_subject'],
-            $data['country'],
-            $data['phone_number'],
-            $data['email']
-        ]);
-
-        return $this->db->lastInsertId();
-    }
-
+    protected static $table = 'members';
 
     public function update(array $data)
     {

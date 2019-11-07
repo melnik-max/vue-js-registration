@@ -11,6 +11,7 @@
       axios.get('/get-members')
         .then(function (resp) {
           membersTable.members = resp.data;
+          console.log(resp.data)
         })
         .catch(function (resp) {
           console.error(resp)
@@ -41,15 +42,24 @@
         axios.post('/members/create', formData)
           .then(function (response) {
             console.log(response.data)
+            if (Array.isArray(response.data)) {
+              $('#errors').removeClass('hidden').empty()
+              response.data.reverse().forEach(function (item) {
+                showErrorMessage('#errors', item)
+              })
+            } else {
+              $('#register-form, #errors').addClass('hidden')
+              $('#more-info-form').removeClass('hidden')
+            }
           })
           .catch(function (error) {
-            console.log(error)
+            console.error(error)
           })
       }
     }
   })
 
-  $.ajax({
+  /*$.ajax({
     url: '/isLogged',
     type: 'GET',
     success: function (response) {
@@ -58,7 +68,7 @@
         more_info_form.removeClass("hidden")
       }
     }
-  })
+  })*/
 
   $('#birth_date').datepicker({
     maxDate: '0',
@@ -69,6 +79,10 @@
   })
 
   $('#phone_number').inputmask('+9 (999) 999-9999')
+
+  function showErrorMessage (selector, text) {
+    $(selector).prepend('<strong class="text-danger">' + text + '</strong><br>')
+  }
 
   /*$(document).on('click', '#to_more_info_form', function () {
     let form_data = register_form.serialize()
@@ -100,9 +114,7 @@
     })
   })*/
 
-  /*function showErrorMessage (selector, text) {
-    $(selector).prepend('<strong class="text-danger">' + text + '</strong><br>')
-  }
+  /*
 
   $(document).on('click', '#back-to-register-form', function () {
     $.ajax({

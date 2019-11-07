@@ -6,18 +6,23 @@ namespace core;
 use components\DB;
 use PDO;
 
-class Model extends DB
+abstract class Model extends DB
 {
-    public function __construct()
+    public static function create(array $data)
     {
-        parent::__construct();
+        $columns = implode(',', array_keys($data));
+        $values = implode(',', array_fill(0, count($data), '?'));
+
+        $query = self::getConnection()->prepare("INSERT INTO "  . self::getTableName() . "({$columns}) VALUES ({$values})");
+        $query->execute(array_values($data));
+
+        return self::getConnection()->lastInsertId();
     }
 
-    public function all()
+    public static function all()
     {
         $items = [];
-
-        $result = $this->db->query("SELECT * FROM {$this->table}");
+        $result = self::getConnection()->query("SELECT * FROM " . self::getTableName());
         $result->setFetchMode(PDO::FETCH_ASSOC);
 
         if ($result) {
@@ -29,21 +34,26 @@ class Model extends DB
         return $items;
     }
 
-    public function count()
+    public static function count()
     {
-        $query = $this->db->prepare("SELECT COUNT(*) FROM {$this->table}");
+        $query = self::getConnection()->prepare("SELECT COUNT(*) FROM " . self::getTableName());
         $query->execute();
         $count = $query->fetchColumn();
         
         return $count;
     }
 
-    public function findOneById($id)
+    public static function findOneById($id)
     {
-        $query = $this->db->prepare("SELECT * FROM {$this->table} WHERE id = :id LIMIT 1");
+        $query = self::getConnection()->prepare("SELECT * FROM {self::getTableName()} WHERE id = :id LIMIT 1");
         $query->execute(['id' => $id]);
-        $modelObject = $query->fetchObject();
 
-        return $modelObject;
+        return $query->fetchObject();
+    }
+
+    private static function getTableName()
+    {
+        $modelPath = get_called_class();
+        return $modelPath::$table;
     }
 }
