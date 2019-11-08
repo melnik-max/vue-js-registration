@@ -24,8 +24,10 @@ abstract class Model extends DB
     {
         $columns = implode('= ?, ', array_keys($data)) . '= ?';
         $query = self::getConnection()->prepare("UPDATE " . self::getTableName() . " SET $columns WHERE id = ?");
+
         $realValues = array_values($data);
         $realValues[] = $id;
+
         $query->execute($realValues);
     }
 

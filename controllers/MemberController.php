@@ -12,42 +12,36 @@ class MemberController extends Controller
 {
     public function actionIndex()
     {
-        $this->render('members');
-    }
-
-    public function actionGetMembers()
-    {
-        returnJSON(Member::all());
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            return $this->render('members');
+        } else {
+            return json(Member::all());
+        }
     }
 
     public function actionGetCountries()
     {
         $countries = include_once ROOT . '/utility/countryList.php';
-        returnJSON($countries);
+        return json($countries);
     }
 
     public function actionRegister()
     {
-        $this->render('register');
+        return $this->render('register');
     }
 
     public function actionCurrent()
     {
-        returnJSON(Member::findOneById($_SESSION['member_id']));
+        if (empty($_SESSION['member_id'])) {
+            return json(false);
+        }
+
+        return json(Member::findOneById($_SESSION['member_id']));
     }
 
     public function actionCount()
     {
-        returnJSON(Member::count());
-    }
-
-    public function actionIsLogged()
-    {
-        if (empty($_SESSION['member_id'])) {
-            returnJSON(false);
-        } else {
-            returnJSON(true);
-        }
+        return json(Member::count());
     }
 
     public function actionCreate()
@@ -70,16 +64,14 @@ class MemberController extends Controller
         $validator = new Validator($data, $required, $maxLength, $filter);
         $errors = $validator->validate();
 
-        if (empty($errors)) {
-            if (empty($_SESSION['member_id'])) {
-                $_SESSION['member_id'] = Member::create($data);
-            } else {
-                $member = new Member();
-                $member->edit($data);
-            }
-            http_response_code(200);
+        if (!empty($errors)) {
+            return json($errors);
+        }
+
+        if (empty($_SESSION['member_id'])) {
+            $_SESSION['member_id'] = Member::create($data);
         } else {
-            returnJSON($errors);
+            Member::update($_SESSION['member_id'], $data);
         }
 
         return true;
@@ -98,7 +90,7 @@ class MemberController extends Controller
         $errors = $validator->validate();
 
         if (!empty($errors)) {
-            returnJSON($errors);
+            return json($errors);
         }
 
         $img = $_FILES['photo']['name'];

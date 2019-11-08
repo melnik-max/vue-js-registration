@@ -2,14 +2,13 @@
 
 (function ($) {
 
-  axios.get('is-logged')
+  axios.get('/members/current')
     .then(function (response) {
-      if (response.data === true) {
+      if (response.data !== false) {
         $('#register-form').addClass('hidden')
         $('#more-info-form').removeClass('hidden')
       }
     })
-
 
   let membersTable = new Vue({
     el: '#members-table',
@@ -21,7 +20,7 @@
     },
     methods: {
       getMembers: function () {
-        axios.get('/get-members')
+        axios.post('/members')
           .then(function (resp) {
             membersTable.members = resp.data;
           })
@@ -31,7 +30,7 @@
       },
 
       getMembersCount: function () {
-        axios.get('/members-count')
+        axios.get('/members/count')
           .then(function (resp) {
             $('#members-count').text(resp.data)
           })
@@ -53,7 +52,7 @@
     },
     methods: {
       getCountries: function () {
-        axios.get('/get-countries')
+        axios.get('/countries')
           .then(function (resp) {
             registerForm.countries = resp.data;
           })
@@ -85,7 +84,7 @@
       },
 
       getCurrentMember: function () {
-        axios.get('/current-member')
+        axios.get('/members/current')
           .then(function (response) {
             let member = response.data
 
@@ -157,7 +156,6 @@
 
         } else {
           $('#more-info-form, #errors, #form-header').addClass('hidden')
-          console.log('t')
           membersTable.getMembersCount()
           $('#social').removeClass('hidden')
         }
