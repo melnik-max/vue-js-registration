@@ -1,5 +1,4 @@
-//import Foo from "./components/Foo.js"
-import test from './components/FormControl.js'
+import FormControl from './components/FormControl.js'
 
 /*Vue.component('test', {
   template: '<p>H123i</p>'
@@ -9,6 +8,6 @@ import test from './components/FormControl.js'
 new Vue({
   el: '#app',
   components: {
-    test: test
+    'form-control': FormControl
   },
 })

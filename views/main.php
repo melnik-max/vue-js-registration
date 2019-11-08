@@ -23,7 +23,7 @@
 
 
 <div id="app">
-    <test></test>
+    <form-control></form-control>
 </div>
 
 <script src="src/index.js" type="module"></script>

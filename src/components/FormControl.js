@@ -1,5 +1,5 @@
 export default {
-  name: 'test',
+  name: 'FormControl',
   template: `
     <h1>Test Custom tag</h1>
   `,
