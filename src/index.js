@@ -1,3 +1,14 @@
-import App from "./App.js"
+//import Foo from "./components/Foo.js"
+import test from './components/FormControl.js'
 
-console.log(App.template)
+/*Vue.component('test', {
+  template: '<p>H123i</p>'
+})*/
+
+
+new Vue({
+  el: '#app',
+  components: {
+    test: test
+  },
+})

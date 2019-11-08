@@ -12,15 +12,19 @@
     <script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
 
     <title>Registration</title>
 </head>
 
 <body>
 
-<?= $content; ?>
+<?/*= $content; */?>
 
-<div id="app"></div>
+
+<div id="app">
+    <test></test>
+</div>
 
 <script src="src/index.js" type="module"></script>
 </body>
