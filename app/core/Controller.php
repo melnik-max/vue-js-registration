@@ -16,13 +16,13 @@ abstract class Controller
             extract($data);
         }
 
-        require (ROOT . '/views/' . $filename . '.php');
+        require ($_SERVER['DOCUMENT_ROOT'] . '/views/' . $filename . '.php');
         $content = ob_get_clean();
 
         if ($this->layout == false) {
             echo $content;
         } else {
-            require(ROOT . '/views/' . $this->layout . '.php');
+            require($_SERVER['DOCUMENT_ROOT'] . '/views/' . $this->layout . '.php');
         }
 
         return true;
