@@ -1,0 +1,22 @@
+{
+  "name": "vue-js-registration",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "browser-sync start --server 'src' --files 'src' --single"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/melnik-max/vue-js-registration.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/melnik-max/vue-js-registration/issues"
+  },
+  "homepage": "https://github.com/melnik-max/vue-js-registration#readme",
+  "devDependencies": {
+    "browser-sync": "^2.26.7"
+  }
+}
