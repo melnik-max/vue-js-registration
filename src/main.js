@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import MembersTable from './components/MembersTable'
 
 Vue.use(VueRouter)
 
+const Qoo = { template: '<div>adsasdsadsa</div>' }
 const Foo = { template: '<div>foo</div>' }
 const Bar = { template: '<div>bar</div>' }
 
@@ -12,6 +14,7 @@ const Bar = { template: '<div>bar</div>' }
 // через `Vue.extend()`, так и просто объект с опциями компонента.
 // Мы поговорим о вложенных маршрутах позднее.
 const routes = [
+  { path: '/members', component: MembersTable },
   { path: '/foo', component: Foo },
   { path: '/bar', component: Bar }
 ]
