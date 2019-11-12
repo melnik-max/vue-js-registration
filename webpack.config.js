@@ -46,6 +46,20 @@ module.exports = {
     extensions: ['*', '.js', '.vue', '.json']
   },
   devServer: {
+    proxy: {
+      '/api/**': {
+       /* target: 'http://127.0.0.1:8000',*/
+        target: 'http://localhost:8000',
+       /* target: 'http://[::1]:8000',*/
+        /*ws: true,*/
+        changeOrigin: true,
+        secure: false,
+        pathRewrite: { '^/api': '' },
+        headers: {
+          Connection: 'keep-alive',
+        },
+      }
+    },
     historyApiFallback: true,
     noInfo: true,
     overlay: true

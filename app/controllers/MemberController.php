@@ -12,11 +12,7 @@ class MemberController extends Controller
 {
     public function actionIndex()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-            return $this->render('members');
-        } else {
-            return json(Member::all());
-        }
+        return json(Member::all());
     }
 
     public function actionGetCountries()

@@ -35,8 +35,9 @@
   export default {
     methods: {
       getMembers () {
-        axios.post('/members')
+        axios.post('/api/members')
           .then(function (resp) {
+            console.log(resp.data)
             return resp.data;
           })
           .catch(function (resp) {
@@ -52,12 +53,3 @@
 
   }
 </script>
-
-<!--
-axios.post('/members')
-.then(function (resp) {
-membersTable.members = resp.data;
-})
-.catch(function (resp) {
-console.error(resp)
-})-->
