@@ -33,22 +33,20 @@
 
 <script>
   export default {
-    methods: {
-      getMembers () {
-        axios.post('/api/members')
-          .then(function (resp) {
-            console.log(resp.data)
-            return resp.data;
-          })
-          .catch(function (resp) {
-            console.error(resp)
-          })
+    data () {
+      return {
+        members: ''
       }
     },
-    computed: {
-      members() {
-        return this.getMembers()
-      }
+    mounted () {
+      const self = this
+      axios.post('/api/members')
+        .then(function (resp) {
+          self.members = resp.data;
+        })
+        .catch(function (resp) {
+          console.error(resp)
+        })
     }
 
   }
