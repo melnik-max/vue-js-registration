@@ -61,7 +61,7 @@ class MemberController extends Controller
         $errors = $validator->validate();
 
         if (!empty($errors)) {
-            return json($errors);
+            return json($errors, 422);
         }
 
         if (empty($_SESSION['member_id'])) {
