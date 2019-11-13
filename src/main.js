@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import MembersTable from './components/MembersTable'
 import RegisterForm from './components/forms/Register'
 import AddInfoForm from './components/forms/AddInfo'
+import SocialSection from './components/SocialSection'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,10 @@ const routes = [
           next({ name: 'register' })
         })
     }
+  },
+  {
+    path: '/social',
+    component: SocialSection
   }
 ]
 
