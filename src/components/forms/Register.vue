@@ -8,9 +8,9 @@
 
                     <h4 id="form_header" class="mt-3 text-center">To participate in the conference, please fill out the form</h4>
 
-                    <section class="my-4 p-3 text-center border" v-if="errors.length">
+                    <div class="my-4 p-3 text-center border" v-if="errors.length">
                         <strong class="text-danger" v-for="error in errors">{{ error }} <br></strong>
-                    </section>
+                    </div>
 
                     <form v-on:submit="send">
 
@@ -59,9 +59,8 @@
                             <input v-model="fields.email" type="email" maxlength="45" class="form-control form-control-lg" id="email" name="email" placeholder="Enter email" required>
                         </div>
 
-                        <button type="submit" id="to_more_info_form" class="btn btn-primary float-right mt-2 mb-2">Next</button>
+                        <button type="submit" class="btn btn-primary float-right mt-2 mb-2">Next</button>
                     </form>
-
 
                 </div>
             </div>
@@ -89,9 +88,9 @@
         })
     },
     methods: {
-
       send(e) {
         e.preventDefault()
+
         const self = this
         const router = this.$router
 

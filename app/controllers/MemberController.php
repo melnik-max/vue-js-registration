@@ -21,15 +21,10 @@ class MemberController extends Controller
         return json($countries);
     }
 
-    public function actionRegister()
-    {
-        return $this->render('register');
-    }
-
     public function actionCurrent()
     {
         if (empty($_SESSION['member_id'])) {
-            return json(false);
+            return json('No logged member', 422);
         }
 
         return json(Member::findOneById($_SESSION['member_id']));
@@ -78,7 +73,7 @@ class MemberController extends Controller
         $maxLength = [
             'company' => 45,
             'position' => 45,
-            'about_me' => 300
+            'about' => 300
         ];
         $filter = ['photo' => 'photo'];
 
@@ -91,17 +86,19 @@ class MemberController extends Controller
 
         $img = $_FILES['photo']['name'];
         $ext = strtolower(pathinfo($img, PATHINFO_EXTENSION));
+
+        $randomName = 'no-photo.jpeg';
+
         if (!empty($img)) {
             $randomName = uniqid() . ".$ext";
-            move_uploaded_file($_FILES['photo']['tmp_name'], 'public/img/' . $randomName);
-        } else {
-            $randomName = 'no-photo.jpeg';
+            $path = str_replace('app', 'src', ROOT) . '/assets/';
+            move_uploaded_file($_FILES['photo']['tmp_name'], $path . $randomName);
         }
 
         Member::update($_SESSION['member_id'], [
             'company' => $_POST['company'],
             'position' => $_POST['position'],
-            'about_me' => $_POST['about_me'],
+            'about' => $_POST['about'],
             'photo' => $randomName
         ]);
 
