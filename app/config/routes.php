@@ -6,5 +6,6 @@ return [
     'countries' => 'member/getCountries',
     'members/create' => 'member/create',
     'members/current' => 'member/current',
-    'members/count' => 'member/count'
+    'members/count' => 'member/count',
+    'twitter' => 'member/getTwitterData'
 ];

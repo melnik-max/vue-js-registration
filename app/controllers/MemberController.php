@@ -35,6 +35,16 @@ class MemberController extends Controller
         return json(Member::count());
     }
 
+    public function actionGetTwitterData()
+    {
+        $params = include(ROOT . '/config/params.php');
+
+        return json([
+            'twitterUrl' => $params['twitter_url'],
+            'twitterText' => $params['twitter_text']
+        ]);
+    }
+
     public function actionCreate()
     {
         $data = $_REQUEST;

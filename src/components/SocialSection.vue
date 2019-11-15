@@ -4,13 +4,12 @@
 
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-sm-10">
-
+                <div class="col-sm-10 text-center">
                     <h4 class="mt-2 mb-2">Registration succeed!</h4>
-                    <a href="https://www.facebook.com/sharer.php?u=https://www.wikipedia.org/" class="fa fa-facebook"></a>
-                    <a href="https://twitter.com/intent/tweet?url=<?= $twitterUrl ?>/&text=<?= $twitterText ?>" class="fa fa-twitter"></a>
-                    <p class="mt-2"><a href="/members" class="text-success h3">All members list ()</a></p>
 
+                    <a :href="'https://www.facebook.com/sharer.php?u=' + twitterUrl" class="fa fa-facebook"></a>
+                    <a :href="'https://twitter.com/intent/tweet?url=' + twitterUrl + '/&text=' + twitterText" class="fa fa-twitter"></a>
+                    <p><router-link to="/members" class="text-success h3">All members list ({{ membersCount }})</router-link></p>
                 </div>
             </div>
         </div>
@@ -23,18 +22,30 @@
   export default {
     data () {
       return {
-        members: ''
+        membersCount: '',
+        twitterUrl: '',
+        twitterText: ''
       }
     },
     mounted () {
-      const self = this
-      axios.post('/api/members')
+      let self = this
+      axios.get('/api/members/count')
         .then(function (resp) {
-          self.members = resp.data;
+          self.membersCount = resp.data
         })
         .catch(function (resp) {
           console.error(resp)
         })
+
+      axios.get('/api/twitter')
+        .then(function (resp) {
+          self.twitterText = resp.data.twitterText
+          self.twitterUrl = resp.data.twitterUrl
+        })
+        .catch(function (resp) {
+          console.error(resp)
+        })
+
     }
 
   }
