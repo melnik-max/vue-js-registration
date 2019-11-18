@@ -86,6 +86,9 @@
         .catch(function (resp) {
           console.error(resp)
         })
+
+      this.setPlugins()
+
     },
     methods: {
       send(e) {
@@ -101,6 +104,18 @@
           .fail(function(errors) {
             self.errors = errors.responseJSON
           })
+      },
+
+      setPlugins() {
+        $('#birth_date').datepicker({
+          maxDate: '0',
+          dateFormat: 'yy-mm-dd',
+          yearRange: '-100:+0',
+          changeMonth: true,
+          changeYear: true
+        })
+
+        $('#phone').inputmask('+9 (999) 999-9999')
       }
     }
   }
