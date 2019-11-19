@@ -57,10 +57,11 @@ class MemberController extends Controller
             'email' => 45,
         ];
         $filter = [
-            'birth_date' => 'date',
             'email' => 'email',
             'phone' => 'phone'
         ];
+        $birthDate = date_parse($data['birth_date']);
+        $data['birth_date'] = $birthDate['year'] . '-' . $birthDate['month'] . '-' . $birthDate['day'];
 
         $validator = new Validator($data, $required, $maxLength, $filter);
         $errors = $validator->validate();

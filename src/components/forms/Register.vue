@@ -25,15 +25,14 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="birth_date">Birth date (*): </label>
-                            <vuejs-datepicker placeholder="Select birth date" name="birth_date" id="birth_date" v-model="fields.birth_date"/>
+                            <label for="birth_date">Birth date (*): </label>  <!--2019-01-31-->
+                            <vuejs-datepicker placeholder="Select birth date" name="birth_date" id="birth_date" format="yyyy-MM-dd" input-class="form-control form-control-lg" v-model="fields.birth_date"/>
                         </div>
 
                         <div class="form-group">
                             <label for="report_subject">Report subject (*): </label>
                             <input v-model="fields.report_subject" type="text" maxlength="200" class="form-control form-control-lg" id="report_subject" name="report_subject" placeholder="Enter report subject" required>
                         </div>
-
 
                         <div class="form-group">
                             <label for="country">Country (*): </label>
@@ -93,7 +92,13 @@
           console.error(resp)
         })
 
-      this.setPlugins()
+      axios.post('/api/members/current')
+        .then(function (resp) {
+          self.fields = resp.data
+        })
+        .catch(function (resp) {
+          console.error(resp)
+        })
 
     },
     methods: {
@@ -111,18 +116,6 @@
           .fail(function(errors) {
             self.errors = errors.responseJSON
           })
-      },
-
-      setPlugins() {
-       /* $('#birth_date').datepicker({
-          maxDate: '0',
-          dateFormat: 'yy-mm-dd',
-          yearRange: '-100:+0',
-          changeMonth: true,
-          changeYear: true
-        })*/
-
-        InputMask('+9 (999) 999-9999').mask('#phone')
       }
     }
   }

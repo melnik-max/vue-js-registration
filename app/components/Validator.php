@@ -51,12 +51,7 @@ class Validator
         if (!empty($this->filter)) {
             foreach ($this->filter as $field => $rule) {
 
-                if ($rule == 'date') {
-                    $date = date_parse($this->fields[$field]);
-                    if ($date["error_count"] != 0 || !checkdate($date["month"], $date["day"], $date["year"])) {
-                        array_push($this->errors, "Date field is not correct");
-                    }
-                } elseif ($rule == 'email') {
+                if ($rule == 'email') {
                     if (Member::isEmailInUse($this->fields[$field])) {
                         array_push($this->errors, "Email is already in use");
                     }
