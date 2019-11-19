@@ -70,7 +70,7 @@
           data: formData,
 
           success: function () {
-            router.push('/members')
+            router.push('/social')
           },
           errors: function (errors) {
             self.errors = errors.responseJSON

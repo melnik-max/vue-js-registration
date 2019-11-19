@@ -26,7 +26,7 @@
 
                         <div class="form-group">
                             <label for="birth_date">Birth date (*): </label>
-                            <input v-model="fields.birth_date" type="text" class="form-control form-control-lg" id="birth_date" name="birth_date" placeholder="Enter date of birth" required>
+                            <vuejs-datepicker placeholder="Select birth date" name="birth_date" id="birth_date" v-model="fields.birth_date"/>
                         </div>
 
                         <div class="form-group">
@@ -70,8 +70,12 @@
 
 <script>
   import InputMask from "inputmask"
+  import vuejsDatepicker from 'vuejs-datepicker';
 
   export default {
+    components: {
+      vuejsDatepicker
+    },
     data () {
       return {
         errors: [],
@@ -99,7 +103,7 @@
         const self = this
         const router = this.$router
         console.log(this.fields)
-       /* console.log($('#phone').val())*/
+
         $.post('/api/members/create', this.fields)
           .done(function() {
             router.push('/about')
@@ -110,13 +114,13 @@
       },
 
       setPlugins() {
-        $('#birth_date').datepicker({
+       /* $('#birth_date').datepicker({
           maxDate: '0',
           dateFormat: 'yy-mm-dd',
           yearRange: '-100:+0',
           changeMonth: true,
           changeYear: true
-        })
+        })*/
 
         InputMask('+9 (999) 999-9999').mask('#phone')
       }
