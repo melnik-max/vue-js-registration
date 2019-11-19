@@ -74,7 +74,6 @@
           },
           errors: function (errors) {
             self.errors = errors.responseJSON
-            console.log(errors)
           },
 
           cache: false,

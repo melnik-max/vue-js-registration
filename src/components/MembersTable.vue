@@ -16,7 +16,7 @@
                     <tbody>
 
                     <tr v-for='member in members'>
-                        <td>{{ member.photo }}</td>
+                        <td><img width="55" height="55" :src="'src/assets/' + member.photo" alt="avatar"></td>
                         <td>{{ member.last_name }}</td>
                         <td>{{ member.report_subject }}</td>
                         <td>{{ member.email }}</td>
