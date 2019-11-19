@@ -37,7 +37,7 @@
                         <div class="form-group">
                             <label for="country">Country (*): </label>
                             <select class="custom-select form-control form-control-lg" name="country" id="country" v-model="fields.country" required>
-                                <option v-for="country in countries" v-bind:value="country">{{ country }}</option>
+                                <option v-for="country in countries" :value="country">{{ country }}</option>
                             </select>
                         </div>
 
@@ -79,7 +79,7 @@
       return {
         errors: [],
         countries: '',
-        fields: {}
+        fields: {},
       }
     },
     mounted () {
@@ -92,9 +92,13 @@
           console.error(resp)
         })
 
+      InputMask('+9 (999) 999-9999').mask('#phone')
+
       axios.post('/api/members/current')
         .then(function (resp) {
-          self.fields = resp.data
+          if (resp.data !== 'No logged member') {
+            self.fields = resp.data
+          }
         })
         .catch(function (resp) {
           console.error(resp)

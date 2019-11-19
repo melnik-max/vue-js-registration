@@ -30,7 +30,7 @@
 
                         <div class="form-group">
                             <label for="photo">Upload avatar: </label>
-                            <input  type="file" accept="image/*" class="form-control-file" name="photo" id="photo">
+                            <input type="file" accept="image/*" class="form-control-file" name="photo" id="photo">
                         </div>
 
                         <button type="button" @click="goBack" id="back-to-register-form" class="btn btn-primary float-left mb-2">Back</button>
@@ -55,37 +55,44 @@
     methods: {
       send(e) {
         e.preventDefault()
-        const self = this
-        const router = this.$router
+        let photo = $('#photo').prop('files')[0]
+        let maxFileSize = 2000 * 1024
+        if (photo['size'] > maxFileSize) {
+          this.errors.push('Image file size cannot be more than 2 MB')
+        } else {
 
-        let formData = new FormData()
-        formData.append('photo', $('#photo').prop('files')[0])
-        formData.append('about', $('#about').val())
-        formData.append('company', $('#company').val())
-        formData.append('position', $('#position').val())
+          const self = this
+          const router = this.$router
 
-        $.ajax({
-          url: '/api/members/update',
-          type: 'POST',
-          data: formData,
+          let formData = new FormData()
+          formData.append('photo', photo)
+          formData.append('about', $('#about').val())
+          formData.append('company', $('#company').val())
+          formData.append('position', $('#position').val())
 
-          success: function () {
-            router.push('/social')
-          },
-          errors: function (errors) {
-            self.errors = errors.responseJSON
-          },
+          $.ajax({
+            url: '/api/members/update',
+            type: 'POST',
+            data: formData,
 
-          cache: false,
-          contentType: false,
-          processData: false
-        })
+            success: function () {
+              router.push('/social')
+            },
+            errors: function (errors) {
+              self.errors = errors.responseJSON
+            },
 
+            cache: false,
+            contentType: false,
+            processData: false
+          })
+
+        }
       },
 
       goBack() {
         this.$router.go(-1)
-      }
+      },
     }
   }
 
