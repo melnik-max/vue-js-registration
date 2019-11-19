@@ -6,13 +6,13 @@
             <div class="row justify-content-center">
                 <div class="col-sm-10">
 
-                    <h4 id="form_header" class="mt-3 text-center">To participate in the conference, please fill out the form</h4>
+                    <h4 class="mt-3 text-center">To participate in the conference, please fill out the form</h4>
 
                     <div class="my-4 p-3 text-center border" v-if="errors.length">
                         <strong class="text-danger" v-for="error in errors">{{ error }} <br></strong>
                     </div>
 
-                    <form v-on:submit="send" enctype="multipart/form-data" id="add_info_form">
+                    <form v-on:submit="send" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="company">Company: </label>
                             <input v-model="fields.company" type="text" maxlength="45" class="form-control form-control-lg" id="company" name="company" placeholder="Enter company title">

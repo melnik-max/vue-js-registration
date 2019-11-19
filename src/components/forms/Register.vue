@@ -69,7 +69,7 @@
 
 <script>
   import InputMask from "inputmask"
-  import vuejsDatepicker from 'vuejs-datepicker';
+  import vuejsDatepicker from 'vuejs-datepicker'
 
   export default {
     components: {
@@ -94,6 +94,10 @@
         .catch(function (resp) {
           console.error(resp)
         })
+
+      $('#country').select2({
+        placeholder: "Select a state"
+      })
 
       InputMask('+9 (999) 999-9999').mask('#phone')
 
