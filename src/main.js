@@ -21,11 +21,11 @@ const routes = [
     component: AddInfoForm,
     beforeEnter(to, from, next) {
       $.get('/api/members/current')
-        .done(function() {
+        .done(function(resp) {
+          if (resp === 'No logged member') {
+            next({ name: 'register' })
+          }
           next()
-        })
-        .fail(function() {
-          next({ name: 'register' })
         })
     }
   },

@@ -69,6 +69,8 @@
 </template>
 
 <script>
+  import InputMask from "inputmask"
+
   export default {
     data () {
       return {
@@ -116,7 +118,7 @@
           changeYear: true
         })
 
-        $('#phone').inputmask('+9 (999) 999-9999')
+        InputMask('+9 (999) 999-9999').mask('#phone')
       }
     }
   }
