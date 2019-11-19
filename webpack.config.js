@@ -1,5 +1,8 @@
+console.log('config')
+
 var path = require('path')
 var webpack = require('webpack')
+
 
 module.exports = {
   entry: './src/main.js',
@@ -46,6 +49,17 @@ module.exports = {
     extensions: ['*', '.js', '.vue', '.json']
   },
   devServer: {
+    proxy: {
+      '/api/**': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+        secure: false,
+        pathRewrite: { '^/api': '' },
+        headers: {
+          Connection: 'keep-alive',
+        },
+      }
+    },
     historyApiFallback: true,
     noInfo: true,
     overlay: true
