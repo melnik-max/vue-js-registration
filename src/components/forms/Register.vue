@@ -26,7 +26,7 @@
 
                         <div class="form-group">
                             <label for="birth_date">Birth date (*): </label>  <!--2019-01-31-->
-                            <vuejs-datepicker placeholder="Select birth date" name="birth_date" id="birth_date" format="yyyy-MM-dd" input-class="form-control form-control-lg" v-model="fields.birth_date"/>
+                            <vuejs-datepicker placeholder="Select birth date" name="birth_date" id="birth_date" format="yyyy-MM-dd" :disabled-dates="disabledDates" input-class="form-control form-control-lg" v-model="fields.birth_date"/>
                         </div>
 
                         <div class="form-group">
@@ -80,6 +80,9 @@
         errors: [],
         countries: '',
         fields: {},
+        disabledDates: {
+          from: new Date(Date.now())
+        }
       }
     },
     mounted () {

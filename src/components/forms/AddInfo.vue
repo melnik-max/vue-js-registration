@@ -55,8 +55,10 @@
     methods: {
       send(e) {
         e.preventDefault()
+
         let photo = $('#photo').prop('files')[0]
         let maxFileSize = 2000 * 1024
+
         if (photo['size'] > maxFileSize) {
           this.errors.push('Image file size cannot be more than 2 MB')
         } else {
