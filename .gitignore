@@ -1,6 +1,7 @@
 .DS_Store
 node_modules
 /dist
+/app/config/params.php
 
 # local env files
 .env.local
